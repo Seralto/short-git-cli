@@ -12,10 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cmd
 
-import "gt/cmd"
+import (
+	"os/exec"
+	"strings"
 
-func main() {
-	cmd.Execute()
+	"github.com/spf13/cobra"
+)
+
+// cCmd represents the c command
+var cCmd = &cobra.Command{
+	Use:   "c Commit message",
+	Short: "A short way of add all files and commit",
+
+	Run: func(cmd *cobra.Command, args []string) {
+		message := strings.Join(args, " ")
+
+		exec.Command("git", "add", ".").Run()
+		exec.Command("git", "commit", "-m", message).Run()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(cCmd)
 }
