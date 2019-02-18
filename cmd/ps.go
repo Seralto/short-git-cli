@@ -23,14 +23,10 @@ import (
 // psCmd represents the ps command
 var psCmd = &cobra.Command{
 	Use:   "ps",
-	Short: "A short way to push branchs",
+	Short: "A short way to push branches",
 
 	Run: func(cmd *cobra.Command, args []string) {
 		branch, _ := cmd.Flags().GetString("branch")
-		// if branch == "" {
-		// 	branch = "World"
-		// }
-		// fmt.Println("Hallo " + branch)
 		exec.Command("git", "push", "origin", branch).Run()
 	},
 }
