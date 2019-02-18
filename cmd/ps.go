@@ -27,6 +27,9 @@ var psCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		branch, _ := cmd.Flags().GetString("branch")
+		if branch == "m" {
+			branch = "master"
+		}
 		exec.Command("git", "push", "origin", branch).Run()
 	},
 }
