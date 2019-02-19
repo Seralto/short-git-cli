@@ -15,6 +15,8 @@
 package cmd
 
 import (
+	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -29,8 +31,15 @@ var cCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		message := strings.Join(args, " ")
 
+		if message == "" {
+			fmt.Println("Please provide a text comment")
+			os.Exit(1)
+		}
+
 		exec.Command("git", "add", ".").Run()
-		exec.Command("git", "commit", "-m", message).Run()
+		out, _ := exec.Command("git", "commit", "-m", message).Output()
+
+		fmt.Printf("%s", out)
 	},
 }
 

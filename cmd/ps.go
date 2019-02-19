@@ -15,6 +15,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os/exec"
 
 	"github.com/spf13/cobra"
@@ -27,10 +28,16 @@ var psCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		branch, _ := cmd.Flags().GetString("branch")
+
 		if branch == "m" {
 			branch = "master"
 		}
-		exec.Command("git", "push", "origin", branch).Run()
+
+		out, err := exec.Command("git", "push", "origin", branch).Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Printf("%s", out)
 	},
 }
 
